@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Medhy Morpion Game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="stylesheets/normalize.min.css" rel="stylesheet">
+    <link href="stylesheets/skeleton.min.css" rel="stylesheet">
+    <link href="stylesheets/style.css" rel="stylesheet">
+
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="six columns offset-by-three">
+            <header>
+                <h2>*** Morpion Game ***</h2>
+                <span>Game in which both players strive to align</span><br>
+                <span>login?</span> <span>register?</span>
+                <br>
+                <br>
+                _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+            </header>
+        </div>
+    </div>
+    <div id="app">
+        <section class="row">
+          <section class="six columns offset-by-three" v-if="currentPage == 'players'" id="players">
+            <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>Before playing please enter the names of both opponents</span>
+              <div style="text-align: center"><br/>
+              <input id="p1" style="color: #000;" placeholder="Player 1" id="player1" required v-model="player1">
+                  <br/>
+              <input id="p2" style="color: #000;" placeholder="Player 2" id="player2" required v-model="player2">
+              </div>
+              <transition name="bounce">
+                  <div style="text-align: center">
+                      <button class="button-primary" v-show="player1 && player2" @click="goToMorpion" >Play Game</button>
+                  </div>
+              </transition>
+
+        </section>
+            <section v-else-if="currentPage === 'morpion'" id="morpion">
+        <section class="row" >
+            <section class="twelve columns">
+                <section class="six columns offset-by-three">
+                    <section class="six columns">
+                        <h5>High score</h5>
+                        <span>{{hscore}}</span>
+                    </section>
+                    <section class="six columns wrong" style="text-align: center">
+                        <h5><span>your turn : </span> {{currentplayer}} </h5>
+                    </section>
+                </section>
+            </section>
+        </section>
+        <section class="row">
+            <section class="twelve columns">
+                <section class="six columns offset-by-three number">
+                                <!-- Composant-->
+
+                    <div class="grid">
+                        <div class="row" v-for="(row, row_index) in rows">
+                            <div class="column test"
+                                 v-for="(column, column_index) in row"
+                                 v-on:click="tap(column, row_index, column_index)"
+                                 >
+                                {{column}}
+                            </div>
+                        </div>
+                        <div class="status">
+                            <div v-if="finished">
+                                <p v-if="stalemate"> Stalemate!</p>
+                                <p v-else>Finished! {{splayers}} wins!</p>
+
+                                <!-- <a v-on:click="restart">Restart</a> -->
+                                <transition name="bounce">
+                                    <div>
+                                        <h5 class="errortext">Nice Try, Try Again</h5><br>
+                                        <button class="button-primary" @click="restart">Restart Game</button>
+                                    </div>
+                                </transition>
+                            </div>
+                            <span v-else><br/>Next go: {{next}}</span>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </section>
+
+            </section>
+        </section>
+            </section>
+
+
+
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+<script src="javascripts/app.js"></script>
+
+
+
+</body>
+</html>
