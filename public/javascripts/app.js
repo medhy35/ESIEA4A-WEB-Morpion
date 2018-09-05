@@ -1,5 +1,6 @@
 /* globals Vue */
 
+Vue.prototype.$http = axios;
 
 
 var App = new Vue({
@@ -18,14 +19,59 @@ var App = new Vue({
          next: 'x',
 
          finished: false,
-         stalemate: false
+         stalemate: false,
 
+        searchQuery: '',
+        gridColumns: ['name', 'score'],
+        gridData: [
+            { name: 'Chuck Norris', power: Infinity },
+            { name: 'Bruce Lee', power: 9000 },
+            { name: 'Jackie Chan', power: 7000 },
+            { name: 'Jet Li', power: 8000 }
+        ]
+
+    },
+    created() {
+      this.$http.get('/list').then(list => {
+        console.log('Affichage du tableau de score', hscore);
+          this.myhscore = list.data;
+      })
+          .catch(err => {
+              console.log('error',err);
+          })
     },
 
     methods: {
+/*'rf((tg§ca
+        sendScore() {
+            this.$http.post('/hscore',{
+                name1: this.player1,
+                name2: this.player2;
+                if(this.currentplayer === this.player1){
+                    const score = 1;
+                } else if (this.currentplayer === this.player2) {
+                    const score = -1;
+                } else{
+                    const score=0;
+                }
+            })
+        },
+        */
         goToMorpion: function(){
             this.currentplayer=this.player1;
             this.currentPage="morpion"
+        },
+        goToPlayer: function(){
+
+            this.currentPage="players"
+        },
+        goTologin: function(){
+
+            this.currentPage="login"
+        },
+        adminpanel : function() {
+
+            this.currentPage = "admin"
         },
         tap: function(value, rowIndex, colIndex) {
             if (!this.finished && !value) {
@@ -35,6 +81,19 @@ var App = new Vue({
 
                 if (this.checkWinner()) {
                     this.finished = true;
+                    if(this.currentplayer === this.player1){
+                        const bdd: [
+                            { name: this.player1 , score=score++ },
+                            { name: player2 , score=score+0 }
+                            ]
+                    }
+                    else if (this.currentplayer === player2) {
+                        const bdd: [
+                            { name: this.player1 , this.score = score+0 },
+                            { name: this.player2 , this.score = score++ }
+                            ]
+                    }
+
                 } else if (this.checkStalemate()) {
                     this.stalemate = true;
                     this.finished = true;
@@ -91,3 +150,5 @@ var App = new Vue({
 
 
 });
+
+

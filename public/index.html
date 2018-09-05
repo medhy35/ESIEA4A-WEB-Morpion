@@ -11,21 +11,26 @@
 
 </head>
 <body>
-<div class="container">
+<div class="container" id="app">
     <div class="row">
         <div class="six columns offset-by-three">
             <header>
                 <h2>*** Morpion Game ***</h2>
                 <span>Game in which both players strive to align</span><br>
-                <span>login?</span> <span>register?</span>
+                <span><a @click="goTologin">login?</a></span>
                 <br>
+                <div v-if="currentPage == 'login'"><br>
+                <input type="text" id="username" style="color: #000;" placeholder="Username" id="username" required v-model="username">
+                <input type="password" id="password" style="color: #000;" placeholder="Password" id="password" required v-model="password">
+                <button @click="adminpanel" class="button-primary">Connect</button>
+                </div>
                 <br>
                 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
             </header>
         </div>
     </div>
-    <div id="app">
+    <div>
         <section class="row">
           <section class="six columns offset-by-three" v-if="currentPage == 'players'" id="players">
             <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -47,8 +52,7 @@
             <section class="twelve columns">
                 <section class="six columns offset-by-three">
                     <section class="six columns">
-                        <h5>High score</h5>
-                        <span>{{hscore}}</span>
+                        <button class="button-primary" @click="goToPlayer" >Return</button>
                     </section>
                     <section class="six columns wrong" style="text-align: center">
                         <h5><span>your turn : </span> {{currentplayer}} </h5>
@@ -87,26 +91,26 @@
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </section>
 
             </section>
         </section>
             </section>
+            <section style="text-align: center"> <br/>
+            <div v-if="currentPage == 'admin'" id="admin">
+                <div id="demo">
+                    <form id="search">
+                        Search <input name="query" v-model="searchQuery">
+                    </form>
+                    <demo-grid
+                            :data="gridData"
+                            :columns="gridColumns"
+                            :filter-key="searchQuery">
+                    </demo-grid>
+                </div>
 
+            </div>
+            </section>
 
 
 
