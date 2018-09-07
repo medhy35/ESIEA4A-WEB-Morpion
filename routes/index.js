@@ -18,11 +18,11 @@ router.get('/', function(req, res, next) {
 });
 
 // table de score
-router.get('/hscore',(req,res)=> {
-    res.json(hscore);
+router.get('/list',(req,res)=> {
+    res.json(list);
 });
 
-router.post('/hscore', (req, res) => {
+router.post('/list', (req, res) => {
     hscore.push({
         nom1: req.body.name1,
         score: req.body.score,
@@ -30,20 +30,18 @@ router.post('/hscore', (req, res) => {
     })
     res.send('OK')
 });
-*/
+
 router.post('/admin',(req,res) => {
    const username = req.body.username;
     const password = req.body.password;
     if(username === 'admin' && password === 'secret'){
-        // user connecté
+        res.send("Vous etes connecté")
     } else {
         res.status(400).send('Erreur de code ou de mot de passe');
     }
 });
 
-router.get('/score', (req, res) => {
-  res.json(listhscore)
-});
-
-
+router.delete('/delete', (req,res) => {
+    const userdel = req.body.userdel
+})
 module.exports = router;

@@ -20,9 +20,9 @@
                 <span><a @click="goTologin">login?</a></span>
                 <br>
                 <div v-if="currentPage == 'login'"><br>
-                <input type="text" id="username" style="color: #000;" placeholder="Username" id="username" required v-model="username">
-                <input type="password" id="password" style="color: #000;" placeholder="Password" id="password" required v-model="password">
-                <button @click="adminpanel" class="button-primary">Connect</button>
+                <input type="text"  style="color: #000;" placeholder="Username"  required v-model="username">
+                <input type="password"  style="color: #000;" placeholder="Password"  required v-model="password">
+                <button @click="adminpanel()" class="button-primary">Connect</button>
                 </div>
                 <br>
                 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -77,7 +77,7 @@
                         <div class="status">
                             <div v-if="finished">
                                 <p v-if="stalemate"> Stalemate!</p>
-                                <p v-else>Finished! {{splayers}} wins!</p>
+                                <p v-else>Finished! {{currentplayer}} wins!</p>
 
                                 <!-- <a v-on:click="restart">Restart</a> -->
                                 <transition name="bounce">
@@ -98,16 +98,32 @@
             </section>
             <section style="text-align: center"> <br/>
             <div v-if="currentPage == 'admin'" id="admin">
-                <div id="demo">
+              <!--  <div id="demo">
                     <form id="search">
                         Search <input name="query" v-model="searchQuery">
                     </form>
-                    <demo-grid
-                            :data="gridData"
-                            :columns="gridColumns"
-                            :filter-key="searchQuery">
-                    </demo-grid>
-                </div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
+                                {{ key | capitalize }}
+                                <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="entry in filteredData">
+                            <td v-for="key in columns">
+                                {{entry[key]}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+
+                <ul>
+                    <li v-for="item in myList">{{ item.name }} &nbsp;&nbsp;&nbsp;&nbsp; {{ item.score }} </li>
+                </ul>
 
             </div>
             </section>
