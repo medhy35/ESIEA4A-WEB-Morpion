@@ -6,9 +6,11 @@ Vue.prototype.$http = axios;
 var App = new Vue({
     el: '#app',
     data: {
-      hscore : 0,
+      score : 1,
       gameEnd : false,
         currentPage: 'players',
+        myList: [],
+        name: this.currentplayer,
         player1: '',
         player2: '',
         rows: [
@@ -33,8 +35,8 @@ var App = new Vue({
     },
     created() {
       this.$http.get('/list').then(list => {
-        console.log('Affichage du tableau de score', hscore);
-          this.myhscore = list.data;
+        console.log('Affichage du tableau de score', list);
+          this.myList = list.data;
       })
           .catch(err => {
               console.log('error',err);
@@ -42,21 +44,28 @@ var App = new Vue({
     },
 
     methods: {
-/*'rf((tg§ca
+
         sendScore() {
-            this.$http.post('/hscore',{
-                name1: this.player1,
-                name2: this.player2;
-                if(this.currentplayer === this.player1){
-                    const score = 1;
-                } else if (this.currentplayer === this.player2) {
-                    const score = -1;
-                } else{
-                    const score=0;
-                }
+            this.$http.post('/list',{
+                name1: this.currentplayer,
+                score: this.score,
+
+            }) .then(() => {
+                this.myList.push({
+                    name: this.name1,
+                    score: this.score
+                })
             })
         },
-        */
+        adminpanel() {
+          this.$http.post('/admin', {
+              user: this.username,
+              pass: this.password,
+          }) .then(()=> {
+
+          })
+        },
+
         goToMorpion: function(){
             this.currentplayer=this.player1;
             this.currentPage="morpion"
@@ -82,16 +91,10 @@ var App = new Vue({
                 if (this.checkWinner()) {
                     this.finished = true;
                     if(this.currentplayer === this.player1){
-                        const bdd: [
-                            { name: this.player1 , score=score++ },
-                            { name: player2 , score=score+0 }
-                            ]
+
                     }
-                    else if (this.currentplayer === player2) {
-                        const bdd: [
-                            { name: this.player1 , this.score = score+0 },
-                            { name: this.player2 , this.score = score++ }
-                            ]
+                    else if (this.currentplayer === this.player2) {
+
                     }
 
                 } else if (this.checkStalemate()) {
@@ -103,6 +106,7 @@ var App = new Vue({
             }
         },
         restart: function(e){
+            this.sendScore();
             this.rows = [
                 ['', '', ''],
                 ['', '', ''],
@@ -145,9 +149,6 @@ var App = new Vue({
             return (values[0] === values[1]) && (values[1] === values[2]);
         }
     }
-
-
-
 
 });
 
